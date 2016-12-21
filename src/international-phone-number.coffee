@@ -64,7 +64,7 @@ angular.module("internationalPhoneNumber", [])
     # Wait for ngModel to be set
     watchOnce = scope.$watch('ngModel', (newValue) ->
       # Wait to see if other scope variables were set at the same time
-      scope.$$postDigest ->
+      $timeout(() ->
 
         if newValue != null && newValue != undefined && newValue.length > 0
 
@@ -72,6 +72,7 @@ angular.module("internationalPhoneNumber", [])
             newValue = '+' + newValue
 
           ctrl.$modelValue = newValue
+          ctrl.$viewValue = newValue
 
         element.intlTelInput(options)
 
@@ -79,7 +80,7 @@ angular.module("internationalPhoneNumber", [])
           element.intlTelInput('loadUtils', '/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js')
 
         watchOnce()
-
+      0)
     )
 
     scope.$watch('country', (newValue) ->
