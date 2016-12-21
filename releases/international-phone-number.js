@@ -61,19 +61,20 @@
             }
           });
           watchOnce = scope.$watch('ngModel', function(newValue) {
-            return scope.$$postDigest(function() {
+            return $timeout(function() {
               if (newValue !== null && newValue !== void 0 && newValue.length > 0) {
                 if (newValue[0] !== '+') {
                   newValue = '+' + newValue;
                 }
                 ctrl.$modelValue = newValue;
+                ctrl.$viewValue = newValue;
               }
               element.intlTelInput(options);
               if (!(options.skipUtilScriptDownload || attrs.skipUtilScriptDownload !== void 0 || options.utilsScript)) {
                 element.intlTelInput('loadUtils', '/bower_components/intl-tel-input/lib/libphonenumber/build/utils.js');
               }
               return watchOnce();
-            });
+            }, 0);
           });
           scope.$watch('country', function(newValue) {
             if (newValue !== null && newValue !== void 0 && newValue !== '') {
